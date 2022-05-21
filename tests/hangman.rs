@@ -3,11 +3,9 @@ use hangman::*;
 // write functions that the tests can call here
 
 #[test]
-fn a_test() {
-}
+fn a_test() {}
 
-// cargo test -- --include-ignored 
+// cargo test -- --include-ignored
 #[test]
 #[ignore]
-fn ignored_test() {
-}
+fn ignored_test() {}
