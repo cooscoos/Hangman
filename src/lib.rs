@@ -1,6 +1,7 @@
 use rand::Rng;
 use std::fs::File;
 use std::io::{BufRead, BufReader};
+use std::{collections::HashSet, io};
 
 #[derive(Debug)]
 pub struct Player {
@@ -178,5 +179,108 @@ impl Word {
 
     pub fn show_answer(&self) -> String {
         self.revealed.clone()
+    }
+}
+
+pub fn new_game() -> (Word, Player, HashSet<char>) {
+    let player1 = Player::default();
+    let guess_list = HashSet::new();
+    let the_word = Word::default();
+
+    println!(
+        "\n\n ~~=== WELCOME TO HANGMAN ===~~ \n\n  Guess this {} letter word. Type 1 to give up.",
+        the_word.length
+    );
+
+    (the_word, player1, guess_list)
+}
+
+pub fn game_loop(
+    the_word: &mut Word,
+    player1: &mut Player,
+    guess_list: &mut HashSet<char>,
+) -> bool {
+    // To do, organise this into something nicer, e.g. https://docs.rs/cli-grid/0.1.2/cli_grid/
+
+    println!("\n Word: ");
+    println!("{:?}", the_word.display_hidden());
+    println!("\n Guess a letter: ");
+
+    let guess = get_player_input();
+
+    match guess {
+        _ if guess.to_lowercase() == "gfy" => {
+            println!("YOU GFY");
+            player1.kill();
+        } // you could match several expletives with a list
+        _ if guess.chars().any(|f| f == '1') => return true,
+        _ if guess.len() > 1 => {
+            println!("One letter at a time, don't use non-english or special characters.")
+        }
+        _ if guess.chars().all(|c| !c.is_ascii_alphabetic()) => {
+            println!("No numbers, symbols or tomfoolery please.")
+        }
+        _ => {
+            let chars: Vec<char> = guess.chars().collect();
+            let guess = chars[0].to_ascii_uppercase();
+            if guess_list.contains(&guess) {
+                println!("You already guessed the letter {guess}!");
+            } else {
+                guess_list.insert(guess); // add the guess to the hash set
+                Word::check_guess(the_word, player1, guess); // check if it's in the word
+            }
+        }
+    }
+
+    player1.display_man(); // display the hangman
+
+    // To do - display guessed words
+
+    // check if player dead
+    if player1.is_dead() {
+        println!("GAME OVER");
+        println!(
+            "The word you failed to guess was: {}",
+            the_word.show_answer()
+        );
+        return true;
+    }
+
+    // If there are no more underscores left in the hidden word, the player has won
+    if !the_word.hidden.iter().any(|c| *c == '_') {
+        println!("YOU WIN!!!");
+        return true; // is this the proper way to quit from main?
+    }
+
+    false
+}
+
+pub fn get_player_input() -> String {
+    let mut guess = String::new();
+    match io::stdin().read_line(&mut guess) {
+        Ok(_) => {}
+        Err(_) => println!("you guess is fucked"),
+    };
+
+    let guess = guess.trim();
+
+    guess.to_string()
+}
+
+pub fn run_game() {
+    let (mut the_word, mut player1, mut guess_list) = new_game();
+
+    loop {
+        match game_loop(&mut the_word, &mut player1, &mut guess_list) {
+            true => break,
+            false => (),
+        };
+    }
+
+    println!("Type y to play again, anything else to quit.");
+    let player_input = get_player_input();
+    match player_input {
+        _ if player_input.to_lowercase() == "y" => run_game(),
+        _ => (),
     }
 }
