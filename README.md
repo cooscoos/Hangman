@@ -18,4 +18,4 @@ Download the repo, then follow instructions for your OS.
 
 ### MacOS:
 
-¯\\_(ツ)_/¯
+`¯\\_(ツ)_/¯`
