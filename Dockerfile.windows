@@ -12,8 +12,8 @@ WORKDIR /app
 
 CMD ["cargo", "build", "--target", "x86_64-pc-windows-gnu", "--release"]
 
-# now run the following:
+# now run the following in terminal:
 # docker build . -t rust_cross_compile/windows -f Dockerfile.windows
 # docker run --rm -ti -v `pwd`:/app rust_cross_compile/windows
 # Then to take ownership:
-# chown usr:usr target/x86_64-pc-windows-gnu
+# sudo chown -R usr:usr target/x86_64-pc-windows-gnu
