@@ -7,6 +7,6 @@ This is a command line interface game of Hangman, coded in Rust.
 Download this repository, and then:
 
 Linux: navigate to /target/release in terminal and run ./hangman
-Windows: navigate to /target/release in cmd and run ./hangman
+Windows: 
 MacOS:
 
