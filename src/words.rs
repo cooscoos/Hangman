@@ -15,7 +15,7 @@ pub struct Word {
 impl Word {
     pub fn default() -> Self {
         // Open up the nounlist in read-only mode
-        let filename = "src/nounlist.txt";
+        let filename = "nounlist.txt";
         let file = match File::open(filename) {
             Ok(filehandle) => filehandle,
             Err(_) => panic!("nounlist.txt file is broken or missing."),
