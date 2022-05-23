@@ -1,6 +1,6 @@
 # Hangman
 
-This is a command line interface game of Hangman, coded in Rust.
+This is a command line interface Hangman game coded in Rust.
 
 ## How do I play this?
 
