@@ -16,6 +16,6 @@ Download the repo, then follow instructions for your OS.
 * Within your terminal, navigate to `\target\x86_64-pc-windows-gnu\release`
 * Run`.\hangman`
 
-### MacOS:
+### MacOS
 
 `¯\_(ツ)_/¯`
