@@ -1,1 +1,0 @@
-/home/coosy/Documents/RustProjects/Hangman/target/release/libhangman.rlib: /home/coosy/Documents/RustProjects/Hangman/src/lib.rs /home/coosy/Documents/RustProjects/Hangman/src/player.rs /home/coosy/Documents/RustProjects/Hangman/src/words.rs
